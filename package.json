@@ -1,0 +1,23 @@
+{
+  "name": "toonborg",
+  "version": "1.0.0",
+  "description": "Toonborg twitch bot for chat commands and moderation.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toony204/Toonborg.git"
+  },
+  "author": "Riley McGinn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Toony204/Toonborg/issues"
+  },
+  "homepage": "https://github.com/Toony204/Toonborg#readme",
+  "dependencies": {
+    "promise": "^8.1.0",
+    "tmi.js": "^1.5.0"
+  }
+}
