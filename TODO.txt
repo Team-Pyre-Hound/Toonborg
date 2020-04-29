@@ -1,0 +1,71 @@
+
+https://github.com/tmijs/docs/blob/gh-pages/_posts/v1.4.2/2019-03-03-Events.md#message
+
+Command privilege / disabled
+
+Figure out how to put commands on cooldown so they aren't spammed too much. Different commands should have
+	differing cooldowns based on their use cases and functionality.
+
+Announce when someone subs, follows, twitchprimes, resubs, w/e
+
+~~COMMANDS~~
+>USER COMMANDS<
+!Bonk
+-increments number of bonks, then says how many times (that user?) has bonked in chat.
+-number in text file?
+-web service?
+
+!Schedule
+-Toonborg reports the schedule as written by strimmer or a mod using the !UpdateSchedule command.
+
+!Giveaway
+-Enters a user into the current giveaway. If a user enters this command more than once during the giveaway
+	period, they will be disqualified.
+-When a user enters once, add them to a table with the value true, if they use the command and are already in
+	the table, set that value to false.
+-If there is no active giveaway, let the user know.
+
+>MOD COMMANDS< (context.mod();)
+!DisableCommand (Command)
+-adds target command to a "Disabled Commands" set and removes it from the enabled commands set.
+-Toonborg should verify in chat that the command has successfully been disabled.
+-When a disabled command is used, toonborg should always say that it is disabled if it is used, then
+	not run the command.
+-Ensure that an unrecognized command isn't reported as disabled.
+-Only general user commands should be disableable. If the target command is a mod command, report that
+	mod commands cannot be disabled.
+
+!EnableCommand (Command)
+-adds target command to the "Enabled Commands" set and removes it from the disabled commands set.
+-Toonborg should verify in chat that the command has successfully been enabled.
+-Only general user commands should be enableable. If the target comand is a mod command, report that
+	mod commands are always enabled.
+
+!DisableAll
+-Disables all enabled user commands.
+
+
+!Initialize
+-Enables and Disables commands as necessary to "reset" the available commands to normal. Most likely all
+	user commands will be available, so this will just turn them all on, but in the case that some
+	commands are under construction, this will make sure those commands are disabled.
+-This command will check an "under construction" set to see which commands to leave disabled. The
+	list of under construction mods will have to be updated by the developer working on them to ensure
+	nothing breaks.
+
+!UpdateSchedule (Schedule)
+-Allows a mod to change what the !Schedule command will say when used.
+
+
+!StartGiveaway
+-Starts a giveaway, enabling users to enter for a chance to win a prize.
+-Initializes an empty map and saves users who enter the !Giveaway command with a value of true if they enter
+	once, or false if they enter more than once.
+-If there is already a giveaway going, lets the strimmer know.
+
+!EndGiveaway
+-Ends the current giveaway period, saving the table.
+-If there is no active giveaway, lets the strimmer know.
+
+!PickRandomWinner
+-
