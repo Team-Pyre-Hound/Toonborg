@@ -1,0 +1,33 @@
+{
+  "!schedule": {
+	"command_aliases": [
+	  "schedge"
+	],
+	"whitelist": [
+	],
+	"helper_text": "Check the Schedule",
+	"Parameters": {
+	  "text": "today we will make soup."
+	},
+	"cooldown": 10,
+	"enabled": true,
+	"allow_disabled": true
+  },
+
+  "!bonk": {
+	"command_aliases": [
+	  "!bnok"
+	],
+	"whitelist": [
+	  "moderator",
+	  "broadcaster",
+	  "viewer"
+	],
+	"helper_text": "Bonks",
+	"Parameters": {
+	},
+	"cooldown": 1,
+	"enabled": true,
+	"allow_disabled": true
+  }
+}
