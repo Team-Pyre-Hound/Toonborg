@@ -6,10 +6,6 @@ var commandDict = {};
 commandDict['!bonk'] = bonkCommand;
 commandDict['!schedule'] = scheduleCommand;
 
-var asyncReadFile = Promise.denodeify(require('fs').readFile);
-var asyncWriteFile = Promise.denodeify(require('fs').writeFile);
-var bonks;
-
 // Define configuration options
 const opts = {
 	identity: {
@@ -29,24 +25,11 @@ const loadConfigsPromise = asyncReadFile('schedule.json', 'utf8')
 							.catch(function(error) {
 								console.error(error);
 							});
-							
-const loadBonkPromise = asyncReadFile('bonks.txt', 'utf8')
-							.then(enableBonk)
-							.catch(function(error) {
-								console.error(error);
-							});
 						
 var commandConfig;
 function enableConfig(res) {
 	commandConfig = JSON.parse(res);
 }
-
-
-function enableBonk(res) {
-	bonks = parseInt(res);
-	// Enable Bonk Command Here!
-}
-
 
 //wait for everything to load
 Promise.all([loadBonkPromise]).then(bootstrapTwitch);
@@ -118,18 +101,6 @@ function messageScrub(message) {
 		}
 	}
 	return {command:message.toLowerCase().substring(0, message.indexOf(" ")), parameters:params};
-}
-
-// Bonks
-function bonkCommand(target, context, msg) {
-	bonks++;
-	asyncWriteFile('bonks.txt', bonks).catch(function(error){console.error(error);}).done();
-	client.say(target, String(context['display-name']) + ' Bonked! Chat has Bonked ' + String(bonks) + ' times!');
-}
-
-// Says schedule in chat
-function scheduleCommand(target, context, msg) {
-	client.say(target, "I smell liek beef");
 }
 
 // Called every time the bot connects to Twitch chat
