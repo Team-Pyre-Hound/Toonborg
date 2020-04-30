@@ -10,8 +10,9 @@ var FileInterface = function() {
 FileInterface.prototype.writeToFile = function(filePath, content) {
     this._asyncWriteFile(path.join(process.cwd(), filePath), content).catch(function(error){console.error(error);}).done(); 
 }
-FileInterface.prototype.readFromFile = function(filePath) {
-    this._asyncReadFile(path.join(process.cwd(), filePath), 'utf8').then(function(res) {return res;}).catch(function(error){console.error(error);})
+
+FileInterface.prototype.readFromFile = function(filePath, callback) {
+    this._asyncReadFile(filePath, 'utf8').then(callback).catch(function(error){console.error(error);});
 }
 
 module.exports = FileInterface;

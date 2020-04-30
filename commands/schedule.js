@@ -1,9 +1,13 @@
-var binko = 0;
 
+const path = require('path');
+var FileInterface = require(path.join(process.cwd(), 'fileInterface.js'));
+const fileInterface = new FileInterface();
 
 module.exports = {
     executeCommand: function(client, target, context, parameters) {
-        binko ++;
-        client.say(target, "I smell liek beef" + binko);
+        var callback = function(res) {
+            client.say(target, res);
+        }
+        fileInterface.readFromFile('schedule.txt', callback);
     }
 }
