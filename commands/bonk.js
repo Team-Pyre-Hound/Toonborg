@@ -4,7 +4,7 @@ const fileInterface = new FileInterface();
 
 
 var bonks = 0;
-var loaded = false;
+var isLoaded = false;
 
 function add(client, target, context) {
     bonks++;
@@ -14,13 +14,13 @@ function add(client, target, context) {
 
 module.exports = {
     executeCommand: function(client, target, context, parameters) {
-        if (!loaded) {
+        if (!isLoaded) {
             var callback = function(res) {
                 bonks = parseInt(res);
                 add(client, target, context);
             }
             fileInterface.readFromFile('bonks.txt', callback);
-            loaded = true;
+            isLoaded = true;
         } else {
             add(client, target, context);
         }
