@@ -1,14 +1,14 @@
 const tmi = require('tmi.js');
 const Promise = require('promise');
 const fs = require('fs');
+const path = require('path');
+const nconf = require('nconf');
+nconf.use('file', {file: './commandconfig.json'})
+var CommandConfig = require('./commandconfig.js');
 
+
+// Maps command names to loaded functions.
 var commandDict = {};
-commandDict['!bonk'] = bonkCommand;
-commandDict['!schedule'] = scheduleCommand;
-
-var asyncReadFile = Promise.denodeify(require('fs').readFile);
-var asyncWriteFile = Promise.denodeify(require('fs').writeFile);
-var bonks;
 
 // Define configuration options
 const opts = {
@@ -24,34 +24,32 @@ const opts = {
 // Create a client with our options
 const client = new tmi.client(opts);
 
-const loadConfigsPromise = asyncReadFile('schedule.json', 'utf8')
-							.then(enableConfig)
-							.catch(function(error) {
-								console.error(error);
-							});
-							
-const loadBonkPromise = asyncReadFile('bonks.txt', 'utf8')
-							.then(enableBonk)
-							.catch(function(error) {
-								console.error(error);
-							});
-						
-var commandConfig;
-function enableConfig(res) {
-	commandConfig = JSON.parse(res);
-}
+const commandConfig = new CommandConfig(nconf)
+commandConfig.load();
+loadCommandScripts("commands");
 
-
-function enableBonk(res) {
-	bonks = parseInt(res);
-	// Enable Bonk Command Here!
+async function loadCommandScripts(directory) {
+	try {
+		const files = await fs.promises.readdir(directory);
+		for(const file of files) {
+			const fileStat = await fs.promises.stat(path.join(directory,file));
+			if(fileStat.isFile()) {
+				var command = require("./" + path.join(directory,file));
+				commandDict["!" + path.basename(file, ".js")] = command.executeCommand;
+			} else if (fileStat.isDirectory()) {
+				await loadCommandScripts(path.join(directory, file));
+			}
+		}
+	} catch (e) {
+		console.error("Error loading command scripts", e)
+	}
 }
 
 
 //wait for everything to load
-Promise.all([loadBonkPromise]).then(bootstrapTwitch);
+bootstrapTwitch();
 
-function bootstrapTwitch(results){
+function bootstrapTwitch(){
 	//Register our event handlers (defined below)
 	client.on('message', onMessageHandler);
 	client.on('connected', onConnectedHandler);
@@ -72,23 +70,24 @@ function onMessageHandler (target, context, msg, self) {
 
 function commandHandler (command, target, context, parameters) {
 	// Check if the command exists
-	if (!(command in commandDict)) {
+	if (!commandConfig.getAllCommandNames().includes(command)) {
 		console.log(`* ` + context['display-name'] + ` tried to use an unknown command: ` + command);
 		return;
 	}
 	// Check if the user has permission to use that command
-	if (!commandConfig[command]['whitelist'].length == 0 && !intersectLists(commandConfig[command]['whitelist'], context['badges'])) {
+	if (!commandConfig.getWhitelist(command).length == 0 && !intersectLists(commandConfig.getWhitelist(command), context['badges'])) {
 		console.log(`* ` + context['display-name'] + ` did not have permission to use ` + command);
 		client.say(target, 'Sorry, ' + context['display-name'] + ", you don't have permission to use " + command);
 		return;
 	}
 	// Check if the command is enabled
-	if (!commandConfig[command]['enabled']) {
+	if (!commandConfig.isEnabled(command)) {
 		console.log(`* ` + context['display-name'] + ` tried to use a disabled command: ` + command);
 		client.say(target, 'Sorry, ' + context['display-name'] + ', ' + command + ' is currently disabled!');
 		return;
 	}
-	commandDict[command](target, context, parameters);
+	
+	commandDict[command](client, target, context, parameters);
 	console.log(`* ` + context['display-name'] + ` Executed ${command}`);
 }
 
@@ -110,29 +109,21 @@ function messageScrub(message) {
 	var params;
 	// if there is more text after the command
 	if (message.indexOf(" ") != -1) {
-		params = message.substring(message.indexOf(" "), message.length).split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
+		params = message.substring(message.indexOf(" ") + 1, message.length).split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		for(i = 0; i < params.length; i++) {
 			if (params[i].substring(0, 1) == '"') {
 				params[i] = params[i].substring(1, params[i].length - 1);
 			}
 		}
+
+		return {command:message.toLowerCase().substring(0, message.indexOf(" ")), parameters:params};
 	}
-	return {command:message.toLowerCase().substring(0, message.indexOf(" ")), parameters:params};
-}
 
-// Bonks
-function bonkCommand(target, context, msg) {
-	bonks++;
-	asyncWriteFile('bonks.txt', bonks).catch(function(error){console.error(error);}).done();
-	client.say(target, String(context['display-name']) + ' Bonked! Chat has Bonked ' + String(bonks) + ' times!');
-}
-
-// Says schedule in chat
-function scheduleCommand(target, context, msg) {
-	client.say(target, "I smell liek beef");
+	return {command:message.toLowerCase(), parameters:params};
 }
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
 	console.log('* Connected to ${addr}:${port}');
 }
+
