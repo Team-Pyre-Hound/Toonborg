@@ -1,7 +1,7 @@
 const tmi = require('tmi.js');
 const Promise = require('promise');
 const fs = require('fs');
-const path = require( 'path' );
+const path = require('path');
 const nconf = require('nconf');
 nconf.use('file', {file: './commandconfig.json'})
 var CommandConfig = require('./commandconfig.js');
