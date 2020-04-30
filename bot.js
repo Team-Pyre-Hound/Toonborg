@@ -109,7 +109,7 @@ function messageScrub(message) {
 	var params;
 	// if there is more text after the command
 	if (message.indexOf(" ") != -1) {
-		params = message.substring(message.indexOf(" "), message.length).split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
+		params = message.substring(message.indexOf(" ") + 1, message.length).split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		for(i = 0; i < params.length; i++) {
 			if (params[i].substring(0, 1) == '"') {
 				params[i] = params[i].substring(1, params[i].length - 1);

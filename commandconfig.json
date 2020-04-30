@@ -29,5 +29,22 @@
 	"cooldown": 1,
 	"enabled": true,
 	"allow_disabled": true
+  },
+
+  "!setschedule": {
+	  "command_aliases": [
+
+	  ],
+	  "whitelist": [
+		  "moderator",
+		  "broadcaster"
+	  ],
+	  "helper_text": "Allows Moderators to set the Schedule",
+	  "Parameters": {
+		  "string": "New Schedule Text"
+	  },
+	  "cooldown": 5,
+	  "enabled": true,
+	  "allow_disabled": false
   }
 }
