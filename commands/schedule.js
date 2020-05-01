@@ -10,6 +10,7 @@ var failCallback = function(err) {
     console.log(`* Critical error with !schedule, disabling command.`);
     console.log(`  * ` + err);
     commandConfig.setEnabled("!schedule", false);
+    commandConfig.saveAsync();
 }
 
 module.exports = {

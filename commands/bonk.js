@@ -15,6 +15,7 @@ var failCallback = function(err) {
     console.log(`* Critical error with !bonk, disabling command.`);
     console.log(`  * ` + err);
     commandConfig.setEnabled("!bonk", false);
+    commandConfig.saveAsync();
 }
 
 module.exports = {
