@@ -88,7 +88,14 @@ function commandHandler (command, target, context, parameters) {
 		client.say(target, 'Sorry, ' + context['display-name'] + ', ' + command + ' is currently disabled!');
 		return;
 	}
+
+	// Check cooldown
+	if(commandConfig.isUserInCooldownNow(command, context['display-name'])) {
+		console.log(`* ` + context['display-name'] + ` tried to use command: ` + command + ', but was in cooldown.');
+		return;
+	}
 	
+	commandConfig.addCooldownEntryNow(command, context['display-name']);
 	commandDict[command](client, target, context, parameters, commandConfig);
 	console.log(`* ` + context['display-name'] + ` Executed ${command}`);
 }

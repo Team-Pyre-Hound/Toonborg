@@ -1,5 +1,6 @@
 var CommandConfig = function(nconfConfig) {
-    this._nconfConfig = nconfConfig;
+	this._nconfConfig = nconfConfig;
+	this._cooldownDict = {};
 };
 
 CommandConfig.prototype.getAllCommandNames = function () {
@@ -40,6 +41,27 @@ CommandConfig.prototype.getData = function(commandName) {
 
 CommandConfig.prototype.isAllow_Disable = function(commandName) {
     return this._nconfConfig.get(commandName + ":allow_disable");
+}
+
+CommandConfig.prototype.addCooldownEntryNow = function(commandName, user) {
+	if(typeof(this._cooldownDict[commandName]) === 'undefined') {
+		this._cooldownDict[commandName] = {};
+	}
+
+	this._cooldownDict[commandName][user] = Date.now();
+}
+
+CommandConfig.prototype.isUserInCooldownNow = function(commandName, user) {
+	if(typeof(this._cooldownDict[commandName]) === 'undefined') {
+		return false;
+	}
+
+	if(typeof(this._cooldownDict[commandName][user]) === 'undefined') {
+		return false;
+	}
+
+	var timeNow = Date.now();
+	return timeNow - (this.getCooldown(commandName) * 1000) < this._cooldownDict[commandName][user];
 }
 
 CommandConfig.prototype.saveAsync = function() {

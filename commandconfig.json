@@ -19,14 +19,11 @@
 	  "!bnok"
 	],
 	"whitelist": [
-	  "moderator",
-	  "broadcaster",
-	  "viewer"
 	],
 	"helper_text": "Bonks",
 	"Parameters": {
 	},
-	"cooldown": 1,
+	"cooldown": 100,
 	"enabled": true,
 	"allow_disabled": true
   },
