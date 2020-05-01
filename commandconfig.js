@@ -35,6 +35,10 @@ CommandConfig.prototype.setEnabled = function(commandName, isEnabled) {
     return this._nconfConfig.set(commandName + ":enabled", isEnabled);
 }
 
+CommandConfig.prototype.getData = function(commandName) {
+	return this._nconfConfig.get(commandName + ":data");
+}
+
 CommandConfig.prototype.isAllow_Disable = function(commandName) {
     return this._nconfConfig.get(commandName + ":allow_disable");
 }
