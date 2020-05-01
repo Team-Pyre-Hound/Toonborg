@@ -4,7 +4,7 @@ const fileInterface = new FileInterface();
 
 
 module.exports = {
-    executeCommand: function(client, target, context, parameters) {
+    executeCommand: function(client, target, context, parameters, commandConfig) {
         console.log(parameters);
         fileInterface.writeToFile(('schedule.txt'), parameters[0]);
     }

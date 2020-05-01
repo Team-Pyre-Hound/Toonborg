@@ -13,7 +13,7 @@ function add(client, target, context) {
 }
 
 module.exports = {
-    executeCommand: function(client, target, context, parameters) {
+    executeCommand: function(client, target, context, parameters, commandConfig) {
         if (!isLoaded) {
             var callback = function(res) {
                 bonks = parseInt(res);

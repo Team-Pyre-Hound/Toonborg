@@ -3,7 +3,7 @@ var FileInterface = require(path.join(process.cwd(), 'fileInterface.js'));
 const fileInterface = new FileInterface();
 
 module.exports = {
-    executeCommand: function(client, target, context, parameters) {
+    executeCommand: function(client, target, context, parameters, commandConfig) {
         var callback = function(res) {
             client.say(target, res);
         }

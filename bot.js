@@ -87,7 +87,7 @@ function commandHandler (command, target, context, parameters) {
 		return;
 	}
 	
-	commandDict[command](client, target, context, parameters);
+	commandDict[command](client, target, context, parameters, commandConfig);
 	console.log(`* ` + context['display-name'] + ` Executed ${command}`);
 }
 
