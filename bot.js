@@ -64,8 +64,10 @@ function onMessageHandler (target, context, msg, self) {
 	// Remove whitespace from chat message
 	target = 'toony204';
 	const commandName = messageScrub(msg.trim());
-	commandHandler(commandName.command, target, context, commandName.parameters);
-}
+	if (commandName !== undefined) {
+		commandHandler(commandName.command, target, context, commandName.parameters);
+	}
+}	
 
 
 function commandHandler (command, target, context, parameters) {

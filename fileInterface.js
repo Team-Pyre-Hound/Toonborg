@@ -7,16 +7,16 @@ var FileInterface = function() {
     this._asyncWriteFile = Promise.denodeify(require('fs').writeFile);
 }
 
-FileInterface.prototype.writeToFile = function(filePath, content) {
+FileInterface.prototype.writeToFile = function(filePath, content, failCallback) {
     this._asyncWriteFile(path.join(process.cwd(), filePath), content)
-        .catch(function(error){console.error(error);})
+        .catch(failCallback)
         .done(); 
 }
 
-FileInterface.prototype.readFromFile = function(filePath, callback) {
+FileInterface.prototype.readFromFile = function(filePath, callback, failCallback) {
     this._asyncReadFile(filePath, 'utf8')
         .then(callback)
-        .catch(function(error){console.error(error);});
+        .catch(failCallback);
 }
 
 module.exports = FileInterface;
