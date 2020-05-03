@@ -1,47 +1,74 @@
 {
-  "!schedule": {
-	"command_aliases": [
-	  "schedge"
-	],
-	"whitelist": [
-	],
-	"helper_text": "Check the Schedule",
-	"Parameters": {
-	  "text": "today we will make soup."
+	"!schedule": {
+		"command_aliases": [
+			"schedge"
+		],
+		"whitelist": [],
+		"helper_text": "Check the Schedule",
+		"Parameters": {
+			"text": "today we will make soup."
+		},
+		"cooldown": 10,
+		"enabled": true,
+		"allow_disabled": true
 	},
-	"cooldown": 10,
-	"enabled": true,
-	"allow_disabled": true
-  },
-
-  "!bonk": {
-	"command_aliases": [
-	  "!bnok"
-	],
-	"whitelist": [
-	],
-	"helper_text": "Bonks",
-	"Parameters": {
+	"!bonk": {
+		"command_aliases": [
+			"!bnok"
+		],
+		"whitelist": [],
+		"helper_text": "Bonks",
+		"Parameters": {},
+		"cooldown": 100,
+		"enabled": true,
+		"allow_disabled": true
 	},
-	"cooldown": 100,
-	"enabled": true,
-	"allow_disabled": true
-  },
-
-  "!setschedule": {
-	  "command_aliases": [
-
-	  ],
-	  "whitelist": [
-		  "moderator",
-		  "broadcaster"
-	  ],
-	  "helper_text": "Allows Moderators to set the Schedule",
-	  "Parameters": {
-		  "string": "New Schedule Text"
-	  },
-	  "cooldown": 5,
-	  "enabled": true,
-	  "allow_disabled": false
-  }
+	"!setschedule": {
+		"command_aliases": [],
+		"whitelist": [
+			"moderator",
+			"broadcaster"
+		],
+		"helper_text": "Allows Moderators to set the Schedule",
+		"Parameters": {
+			"string": "New Schedule Text"
+		},
+		"cooldown": 5,
+		"enabled": true,
+		"allow_disabled": false
+	},
+	"!discord": {
+		"command_aliases": [],
+		"whitelist": [],
+		"helper_text": "Posts a Discord invite link in chat",
+		"Parameters": {},
+		"cooldown": 10,
+		"enabled": true,
+		"allow_disabled": true,
+		"data": {
+			"discord_link": "https://discord.gg/BNNdc3P"
+		}
+	},
+	"!socialmedia": {
+		"command_aliases": [
+			"!socials"
+		],
+		"whitelist": [],
+		"helper_text": "Posts social media links in chat",
+		"Parameters": {},
+		"cooldown": 10,
+		"enabled": true,
+		"allow_disabled": true,
+		"data": {
+			"instagram_link": "https://instagram.com/bitonality",
+			"snapchat_username": "bitonality",
+			"vsco_link": "http://vsco.co/bitonality",
+			"spotify_link": "https://open.spotify.com/artist/0KXaWVS83bhognhqmyG9fj?si=1sLxoZBGSfGPIM1Ki9dbGA",
+			"spotify_tinyurl": "https://tinyurl.com/y99lve66",
+			"steam_username": "bitonality",
+			"steam_friendcode": "40404283",
+			"battlenet": "bitonality#1296",
+			"riotgames": "bitonality#9724"
+		}
+	}
 }

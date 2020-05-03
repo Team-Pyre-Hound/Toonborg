@@ -17,7 +17,7 @@ const opts = {
 		password: 'oauth:uc64jykjuj3u0uzx0hbp30qag0j3tt'
 	},
 	channels: [
-		'Toony204'
+		'bitonality'
 	]
 };
 
@@ -62,7 +62,7 @@ function onMessageHandler (target, context, msg, self) {
 	if (self) {return; } // Ignore messages from the bot
 	
 	// Remove whitespace from chat message
-	target = 'toony204';
+	target = 'bitonality';
 	const commandName = messageScrub(msg.trim());
 	if (commandName !== undefined) {
 		commandHandler(commandName.command, target, context, commandName.parameters);
