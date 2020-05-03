@@ -1,3 +1,6 @@
+var fs    = require('fs'),
+nconf = require('nconf');
+
 var CommandConfig = function(nconfConfig) {
 	this._nconfConfig = nconfConfig;
 	this._cooldownDict = {};
@@ -32,7 +35,7 @@ CommandConfig.prototype.isEnabled = function(commandName) {
 }
 
 CommandConfig.prototype.setEnabled = function(commandName, isEnabled) {
-    return this._nconfConfig.set(commandName + ":enabled", isEnabled);
+    this._nconfConfig.set(commandName + ":enabled", isEnabled);
 }
 
 CommandConfig.prototype.getData = function(commandName) {
@@ -65,17 +68,14 @@ CommandConfig.prototype.isUserInCooldownNow = function(commandName, user) {
 }
 
 CommandConfig.prototype.saveAsync = function() {
-    return (new Promise(function(resolve, reject) {
-		this._nconfConfig.save(function(err) {
-			if(err) {
-				console.error(err.message);
-				reject(err);
-			}
+	this._nconfConfig.save(function(err) {
+		if(err) {
+			console.error(err.message);
+			return;
+		}
 
-			console.debug("Config saved successfully.");
-			resolve("Config saved succesfully");
-		})
-	}));
+		console.debug("Config saved successfully.");
+	});
 }
 
 CommandConfig.prototype.load = function() {
