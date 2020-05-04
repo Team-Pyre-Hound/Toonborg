@@ -18,7 +18,7 @@ module.exports = {
                 bonks = parseInt(res);
                 add(client, target, context);
             }
-
+            
             var failCallback = function(err) {
                 console.log(`* Critical error with !bonk, disabling command.`);
                 console.log(`  * ` + err);

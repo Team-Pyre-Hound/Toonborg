@@ -2,7 +2,6 @@ const path = require('path');
 var FileInterface = require(path.join(process.cwd(), 'fileInterface.js'));
 const fileInterface = new FileInterface();
 
-
 module.exports = {
     executeCommand: function(client, target, context, parameters, commandConfig) {
         var failCallback = function(err) {

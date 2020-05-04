@@ -17,7 +17,7 @@ const opts = {
 		password: 'oauth:uc64jykjuj3u0uzx0hbp30qag0j3tt'
 	},
 	channels: [
-		'bitonality'
+		'Toony204'
 	]
 };
 
@@ -41,6 +41,7 @@ async function loadCommandScripts(directory) {
 			}
 		}
 	} catch (e) {
+		console.log(e);
 		console.error("Error loading command scripts", e)
 	}
 }
@@ -62,7 +63,7 @@ function onMessageHandler (target, context, msg, self) {
 	if (self) {return; } // Ignore messages from the bot
 	
 	// Remove whitespace from chat message
-	target = 'bitonality';
+	target = 'toony204';
 	const commandName = messageScrub(msg.trim());
 	if (commandName !== undefined) {
 		commandHandler(commandName.command, target, context, commandName.parameters);

@@ -42,8 +42,20 @@ CommandConfig.prototype.getData = function(commandName) {
 	return this._nconfConfig.get(commandName + ":data");
 }
 
+CommandConfig.prototype.getData = function(commandName) {
+	return this._nconfConfig.get(commandName + ":data");
+}
+
 CommandConfig.prototype.isAllow_Disable = function(commandName) {
     return this._nconfConfig.get(commandName + ":allow_disable");
+}
+
+CommandConfig.prototype.setData = function(commandName, data) {
+	return this._nconfConfig.set(commandName + ":data", data);
+}
+
+CommandConfig.prototype.containsCommand = function(commandName) {
+	return (this._nconfConfig.get(commandName) !== undefined);
 }
 
 CommandConfig.prototype.addCooldownEntryNow = function(commandName, user) {
