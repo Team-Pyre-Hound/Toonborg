@@ -1,8 +1,6 @@
 module.exports = {
     executeCommand: function(client, target, context, parameters, commandConfig) {
         try {
-            console.log(parameters[0]);
-            console.log(commandConfig.isAllow_Disable(parameters[0]));
             if (commandConfig.isEnabled(parameters[0]) && commandConfig.isAllow_Disable(parameters[0])) {
                 commandConfig.setEnabled(parameters[0], false);
                 commandConfig.saveAsync();
