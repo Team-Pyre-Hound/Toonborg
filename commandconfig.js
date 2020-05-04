@@ -42,6 +42,10 @@ CommandConfig.prototype.isAllow_Disable = function(commandName) {
     return this._nconfConfig.get(commandName + ":allow_disable");
 }
 
+CommandConfig.prototype.setData = function(commandName, data) {
+	return this._nconfConfig.set(commandName + ":data", data);
+}
+
 CommandConfig.prototype.saveAsync = function() {
     return (new Promise(function(resolve, reject) {
 		this._nconfConfig.save(function(err) {

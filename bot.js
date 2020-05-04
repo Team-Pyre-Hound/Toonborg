@@ -41,6 +41,7 @@ async function loadCommandScripts(directory) {
 			}
 		}
 	} catch (e) {
+		console.log(e);
 		console.error("Error loading command scripts", e)
 	}
 }
