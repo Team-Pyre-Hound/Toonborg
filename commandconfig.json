@@ -1,10 +1,9 @@
 {
 	"!schedule": {
-	  	"command_aliases": [
-		"schedge"
+		"command_aliases": [
+			"schedge"
 		],
-		"whitelist": [
-		],
+		"whitelist": [],
 		"helper_text": "Check the Schedule",
 		"Parameters": {
 			"text": "today we will make soup."
@@ -13,28 +12,19 @@
 		"enabled": true,
 		"allow_disable": true
 	},
-  
 	"!bonk": {
-	  	"command_aliases": [
-			"!bnok"
-	  	],
-	  	"whitelist": [
-			"moderator",
-			"broadcaster",
-			"viewer"
-	  	],
-	  	"helper_text": "Bonks",
-	  	"Parameters": {
-	  	},
-	  	"cooldown": 1,
-	  	"enabled": true,
-	  	"allow_disable": true
-	},
-  
-	"!setschedule": {
 		"command_aliases": [
-  
+			"!bnok"
 		],
+		"whitelist": [],
+		"helper_text": "Bonks",
+		"Parameters": {},
+		"cooldown": 100,
+		"enabled": true,
+		"allow_disable": true
+	},
+	"!setschedule": {
+		"command_aliases": [],
 		"whitelist": [
 			"moderator",
 			"broadcaster"
@@ -47,7 +37,6 @@
 		"enabled": true,
 		"allow_disable": false
 	},
-  
 	"!discord": {
 		"command_aliases": [],
 		"whitelist": [],
@@ -60,7 +49,6 @@
 			"discord_link": "https://discord.gg/BNNdc3P"
 		}
 	},
-  
 	"!socialmedia": {
 		"command_aliases": [
 			"!socials"
@@ -83,7 +71,6 @@
 			"riotgames": "bitonality#9724"
 	  }
 	},
-
 	"!jackboxcode": {
 		"command_aliases": [],
 		"whitelist": [],
@@ -96,7 +83,6 @@
 			"code": "Code not set! Mods are L A Z Y"
 		}
 	},
-
 	"!setcode": {
 		"command_aliases": [],
 		"whitelist": [
@@ -112,7 +98,6 @@
 		"allow_disable": false,
 		"data": {}
 	},
-
 	"!enable": {
 		"command_aliases": [],
 		"whitelist": [
@@ -128,7 +113,6 @@
 		"allow_disable": false,
 		"data": {}
 	},
-
 	"!disable": {
 		"command_aliases": [],
 		"whitelist": [

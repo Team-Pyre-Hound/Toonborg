@@ -17,7 +17,7 @@ const opts = {
 		password: 'oauth:uc64jykjuj3u0uzx0hbp30qag0j3tt'
 	},
 	channels: [
-		'Toony204'
+		'bitonality'
 	]
 };
 
@@ -63,7 +63,7 @@ function onMessageHandler (target, context, msg, self) {
 	if (self) {return; } // Ignore messages from the bot
 	
 	// Remove whitespace from chat message
-	target = 'toony204';
+	target = 'bitonality';
 	const commandName = messageScrub(msg.trim());
 	if (commandName !== undefined) {
 		commandHandler(commandName.command, target, context, commandName.parameters);
@@ -89,7 +89,14 @@ function commandHandler (command, target, context, parameters) {
 		client.say(target, 'Sorry, ' + context['display-name'] + ', ' + command + ' is currently disabled!');
 		return;
 	}
+
+	// Check cooldown
+	if(commandConfig.isUserInCooldownNow(command, context['display-name'])) {
+		console.log(`* ` + context['display-name'] + ` tried to use command: ` + command + ', but was in cooldown.');
+		return;
+	}
 	
+	commandConfig.addCooldownEntryNow(command, context['display-name']);
 	commandDict[command](client, target, context, parameters, commandConfig);
 	console.log(`* ` + context['display-name'] + ` Executed ${command}`);
 }

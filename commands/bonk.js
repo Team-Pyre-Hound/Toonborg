@@ -11,12 +11,6 @@ function add(client, target, context) {
     client.say(target, String(context['display-name']) + ' Bonked! Chat has Bonked ' + String(bonks) + ' times!');
 }
 
-var failCallback = function(err) {
-    console.log(`* Critical error with !bonk, disabling command.`);
-    console.log(`  * ` + err);
-    commandConfig.setEnabled("!bonk", false);
-}
-
 module.exports = {
     executeCommand: function(client, target, context, parameters, commandConfig) {
         if (!isLoaded) {
@@ -24,6 +18,14 @@ module.exports = {
                 bonks = parseInt(res);
                 add(client, target, context);
             }
+            
+            var failCallback = function(err) {
+                console.log(`* Critical error with !bonk, disabling command.`);
+                console.log(`  * ` + err);
+                commandConfig.setEnabled("!bonk", false);
+                commandConfig.saveAsync();
+            }
+            
             fileInterface.readFromFile('bonks.txt', callback, failCallback);
             isLoaded = true;
         } else {

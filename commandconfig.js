@@ -1,5 +1,9 @@
+var fs    = require('fs'),
+nconf = require('nconf');
+
 var CommandConfig = function(nconfConfig) {
-    this._nconfConfig = nconfConfig;
+	this._nconfConfig = nconfConfig;
+	this._cooldownDict = {};
 };
 
 CommandConfig.prototype.getAllCommandNames = function () {
@@ -31,7 +35,11 @@ CommandConfig.prototype.isEnabled = function(commandName) {
 }
 
 CommandConfig.prototype.setEnabled = function(commandName, isEnabled) {
-    return this._nconfConfig.set(commandName + ":enabled", isEnabled);
+    this._nconfConfig.set(commandName + ":enabled", isEnabled);
+}
+
+CommandConfig.prototype.getData = function(commandName) {
+	return this._nconfConfig.get(commandName + ":data");
 }
 
 CommandConfig.prototype.getData = function(commandName) {
@@ -46,18 +54,36 @@ CommandConfig.prototype.setData = function(commandName, data) {
 	return this._nconfConfig.set(commandName + ":data", data);
 }
 
-CommandConfig.prototype.saveAsync = function() {
-    return (new Promise(function(resolve, reject) {
-		this._nconfConfig.save(function(err) {
-			if(err) {
-				console.error(err.message);
-				reject(err);
-			}
+CommandConfig.prototype.addCooldownEntryNow = function(commandName, user) {
+	if(typeof(this._cooldownDict[commandName]) === 'undefined') {
+		this._cooldownDict[commandName] = {};
+	}
 
-			console.debug("Config saved successfully.");
-			resolve("Config saved succesfully");
-		})
-	}));
+	this._cooldownDict[commandName][user] = Date.now();
+}
+
+CommandConfig.prototype.isUserInCooldownNow = function(commandName, user) {
+	if(typeof(this._cooldownDict[commandName]) === 'undefined') {
+		return false;
+	}
+
+	if(typeof(this._cooldownDict[commandName][user]) === 'undefined') {
+		return false;
+	}
+
+	var timeNow = Date.now();
+	return timeNow - (this.getCooldown(commandName) * 1000) < this._cooldownDict[commandName][user];
+}
+
+CommandConfig.prototype.saveAsync = function() {
+	this._nconfConfig.save(function(err) {
+		if(err) {
+			console.error(err.message);
+			return;
+		}
+
+		console.debug("Config saved successfully.");
+	});
 }
 
 CommandConfig.prototype.load = function() {
