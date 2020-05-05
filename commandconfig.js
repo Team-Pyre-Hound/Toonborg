@@ -54,6 +54,10 @@ CommandConfig.prototype.setData = function(commandName, data) {
 	return this._nconfConfig.set(commandName + ":data", data);
 }
 
+CommandConfig.prototype.containsCommand = function(commandName) {
+	return (this._nconfConfig.get(commandName) !== undefined);
+}
+
 CommandConfig.prototype.addCooldownEntryNow = function(commandName, user) {
 	if(typeof(this._cooldownDict[commandName]) === 'undefined') {
 		this._cooldownDict[commandName] = {};
