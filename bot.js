@@ -89,16 +89,52 @@ function commandHandler (command, target, context, parameters) {
 		client.say(target, 'Sorry, ' + context['display-name'] + ', ' + command + ' is currently disabled!');
 		return;
 	}
-
+	// Check if the given parameters match the expected parameters
+	if (!checkRequirements(command, parameters)) {
+		client.say(target, 'Sorry, ' + context['display-name'] + ', you provided unexpected or incorrect parameters for ' + command + '!');
+		return;
+	}
 	// Check cooldown
 	if(commandConfig.isUserInCooldownNow(command, context['display-name'])) {
 		console.log(`* ` + context['display-name'] + ` tried to use command: ` + command + ', but was in cooldown.');
 		return;
 	}
-	
 	commandConfig.addCooldownEntryNow(command, context['display-name']);
 	commandDict[command](client, target, context, parameters, commandConfig);
 	console.log(`* ` + context['display-name'] + ` Executed ${command}`);
+}
+
+// Checks if the given parameters match the expected parameters for the given command
+function checkRequirements (command, parameters) {
+	console.log(parameters);
+	if (Object.keys(commandConfig.getParameters(command)).length == 0 && parameters.length == 0) {
+		return true;
+	}
+	if (Object.keys(commandConfig.getParameters(command)).length == 0 && parameters.length > 0) {
+		console.log(`* ` + command + ` expected no parameters but found ` + parameters.length + `. --- Running Anyways`);
+		return true;
+	}
+	expected = Object.keys(commandConfig.getParameters(command));
+	if (parameters.length != expected.length) {
+		console.log(`* Incorrect number of parameters for command ` + command);
+		return false;
+	}
+	for (i = 0; i < parameters.length; i++) {
+		if (expected[i] == "int" && !(Number(parameters[i]) != NaN && Number(parameters[i]) % 1 === 0.0)) {
+			console.log(`* ` + command + ` expected an int at index ` + i);
+			return false;
+		}
+		if (expected[i] == "float" && Number(parameters[i] == NaN)) {
+			console.log(`* ` + command + ` expected a float at index ` + i);
+			return false;
+		}
+		if (expected[i] == "boolean" && (parameters[i] != 'false' || parameters[i] != 'true')) {
+			console.log(`* ` + command + ` expected a boolean at index ` + i);
+			return false;
+		}
+		// Theoretically, anything that short circuits the first half of the previous checks SHOULD be an expected string
+	}
+	return true;
 }
 
 // returns true if there is at least one match between two lists
@@ -116,7 +152,7 @@ function messageScrub(message) {
 	if (message.substring(0, 1) != '!') {
 		return;
 	}
-	var params;
+	var params = [];
 	// if there is more text after the command
 	if (message.indexOf(" ") != -1) {
 		params = message.substring(message.indexOf(" ") + 1, message.length).split(/ (?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -125,10 +161,8 @@ function messageScrub(message) {
 				params[i] = params[i].substring(1, params[i].length - 1);
 			}
 		}
-
 		return {command:message.toLowerCase().substring(0, message.indexOf(" ")), parameters:params};
 	}
-
 	return {command:message.toLowerCase(), parameters:params};
 }
 

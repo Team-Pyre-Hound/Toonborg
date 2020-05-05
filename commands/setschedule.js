@@ -4,7 +4,6 @@ const fileInterface = new FileInterface();
 
 module.exports = {
     executeCommand: function(client, target, context, parameters, commandConfig) {
-        console.log(parameters);
         var failCallback = function(err) {
             console.log(`* Critical error with !setschedule, disabling command.`);
             console.log(`  * ` + err);
