@@ -90,7 +90,7 @@ function commandHandler (command, target, context, parameters) {
 		return;
 	}
 	// Check if the given parameters match the expected parameters
-	if (!checkRequirements(command, parameters)) {
+	if (!checkParameters(command, parameters)) {
 		client.say(target, 'Sorry, ' + context['display-name'] + ', you provided unexpected or incorrect parameters for ' + command + '!');
 		return;
 	}
@@ -105,8 +105,7 @@ function commandHandler (command, target, context, parameters) {
 }
 
 // Checks if the given parameters match the expected parameters for the given command
-function checkRequirements (command, parameters) {
-	console.log(parameters);
+function checkParameters(command, parameters) {
 	if (Object.keys(commandConfig.getParameters(command)).length == 0 && parameters.length == 0) {
 		return true;
 	}
@@ -119,22 +118,23 @@ function checkRequirements (command, parameters) {
 		console.log(`* Incorrect number of parameters for command ` + command);
 		return false;
 	}
+	fails = 0;
 	for (i = 0; i < parameters.length; i++) {
 		if (expected[i] == "int" && !(Number(parameters[i]) != NaN && Number(parameters[i]) % 1 === 0.0)) {
 			console.log(`* ` + command + ` expected an int at index ` + i);
-			return false;
+			fails++;
 		}
 		if (expected[i] == "float" && Number(parameters[i] == NaN)) {
 			console.log(`* ` + command + ` expected a float at index ` + i);
-			return false;
+			fails++;
 		}
 		if (expected[i] == "boolean" && (parameters[i] != 'false' || parameters[i] != 'true')) {
 			console.log(`* ` + command + ` expected a boolean at index ` + i);
-			return false;
+			fails++;
 		}
 		// Theoretically, anything that short circuits the first half of the previous checks SHOULD be an expected string
 	}
-	return true;
+	return fails == 0;
 }
 
 // returns true if there is at least one match between two lists
