@@ -5,7 +5,7 @@
     ],
     "whitelist": [],
     "helper_text": "Check the Schedule",
-    "Parameters": {
+    "parameters": {
       "text": "today we will make soup."
     },
     "cooldown": 10,
@@ -18,7 +18,7 @@
     ],
     "whitelist": [],
     "helper_text": "Bonks",
-    "Parameters": {},
+    "parameters": {},
     "cooldown": 100,
     "enabled": true,
     "allow_disable": true
@@ -30,7 +30,7 @@
       "broadcaster"
     ],
     "helper_text": "Allows Moderators to set the Schedule",
-    "Parameters": {
+    "parameters": {
       "string": "New Schedule Text"
     },
     "cooldown": 5,
@@ -41,7 +41,7 @@
     "command_aliases": [],
     "whitelist": [],
     "helper_text": "Posts a Discord invite link in chat",
-    "Parameters": {},
+    "parameters": {},
     "cooldown": 10,
     "enabled": true,
     "allow_disable": true,
@@ -55,7 +55,7 @@
     ],
     "whitelist": [],
     "helper_text": "Posts social media links in chat",
-    "Parameters": {},
+    "parameters": {},
     "cooldown": 10,
     "enabled": true,
     "allow_disable": true,
@@ -75,7 +75,7 @@
     "command_aliases": [],
     "whitelist": [],
     "helper_text": "Posts the jackbox.tv room code in chat",
-    "Parameters": {},
+    "parameters": {},
     "cooldown": 10,
     "enabled": true,
     "allow_disable": true,
@@ -90,7 +90,7 @@
       "broadcaster"
     ],
     "helper_text": "Allows mods to update the jackbox code command",
-    "Parameters": {
+    "parameters": {
       "string": "new jackbox code"
     },
     "cooldown": 1,
@@ -105,7 +105,7 @@
       "broadcaster"
     ],
     "helper_text": "Allows mods to enable a disabled command",
-    "Parameters": {
+    "parameters": {
       "string": "command to be enabled"
     },
     "cooldown": 1,
@@ -120,7 +120,7 @@
       "broadcaster"
     ],
     "helper_text": "Allows mods to disable an enabled command",
-    "Parameters": {
+    "parameters": {
       "string": "command to be disabled"
     },
     "cooldown": 1,
